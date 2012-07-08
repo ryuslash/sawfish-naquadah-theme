@@ -3,7 +3,18 @@
 (define naquadah:foregrounds '("#555753" "#eeeeec"))
 
 (define naquadah:transient-frame
-  `(;; title border
+  `(;; border
+    ((background . ,naquadah:backgrounds)
+     (left-edge . -1)
+     (right-edge . -1)
+     (top-edge . -1)
+     (bottom-edge . -1)
+     (below-client . t))))
+
+(define naquadah:frame
+  `(,@naquadah:transient-frame
+
+    ;; title border
     ((background . ,naquadah:rbackgrounds)
      (left-edge . -1)
      (right-edge . -1)
@@ -34,23 +45,10 @@
      (x-justify . 6)
      (class . title))))
 
-;; frame layout
-(define naquadah:frame
-  `(;; border
-    ((background . ,naquadah:backgrounds)
-     (left-edge . -1)
-     (right-edge . -1)
-     (top-edge . -1)
-     (bottom-edge . 0)
-     (below-client . t)
-     (class . left-border))
-
-    ,@naquadah:transient-frame))
-
 (add-frame-style 'naquadah
                  (lambda (w type)
                    (case type
                      ((default) naquadah:frame)
-                     ((transient) naquadah:frame)
-                     ((shaped) naquadah:transient-frame)
-                     ((shaped-transient) naquadah:transient-frame))))
+                     ((transient) naquadah:transient-frame)
+                     ((shaped) naquadah:frame)
+                     ((shaped-transient) naquadah:frame))))
